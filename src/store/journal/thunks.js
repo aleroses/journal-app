@@ -8,7 +8,9 @@ import {
   addNewEmptyNote,
   savingNewNote,
   setActiveNote,
+  setNotes,
 } from "./journalSlice";
+import { loadNotes } from "../../helpers/loadNotes";
 
 export const startNewNote = () => {
   return async (dispatch, getState) => {
@@ -35,5 +37,17 @@ export const startNewNote = () => {
     // dispatch
     dispatch(addNewEmptyNote(newNote));
     dispatch(setActiveNote(newNote));
+  };
+};
+
+export const startLoadingNotes = () => {
+  return async (dispatch, getState) => {
+    const { uid } = getState().auth;
+
+    if (!uid) throw new Error("The user uid doesn't exist");
+
+    const notes = await loadNotes(uid);
+
+    dispatch(setNotes(notes));
   };
 };

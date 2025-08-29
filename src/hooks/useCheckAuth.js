@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { login, logout } from "../store/auth/authSlice";
 import { FirebaseAuth } from "../firebase/config";
+import { startLoadingNotes } from "../store/journal/thunks";
 
 export const useCheckAuth = () => {
   const { status } = useSelector((state) => state.auth);
@@ -16,9 +17,10 @@ export const useCheckAuth = () => {
 
       const { uid, email, displayName, photoURL } = user;
 
-      dispatch(
-        login({ uid, email, displayName, photoURL })
-      );
+      dispatch(login({ uid, email, displayName, photoURL }));
+      
+      // If you place this before dispatch(login({})) it will fail.
+      dispatch(startLoadingNotes());
     });
   }, []);
 
