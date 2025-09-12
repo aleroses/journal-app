@@ -8,6 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import {
+  DeleteOutline,
   SaveOutlined,
   UploadOutlined,
 } from "@mui/icons-material";
@@ -18,6 +19,7 @@ import { useForm } from "../../hooks/useForm";
 import { ImageGallery } from "../components/ImageGallery";
 import { setActiveNote } from "../../store/journal/journalSlice";
 import {
+  startDeletingNote,
   startSaveNote,
   startUploadingFiles,
 } from "../../store/journal/thunks";
@@ -57,6 +59,10 @@ export const NoteView = () => {
     if (target.files === 0) return;
 
     dispatch(startUploadingFiles(target.files));
+  };
+
+  const onDelete = () => {
+    dispatch(startDeletingNote());
   };
 
   return (
@@ -138,6 +144,16 @@ export const NoteView = () => {
           />
         </Grid2>
 
+        <Grid2 container justifyContent="end">
+          <Button
+            onClick={onDelete}
+            sx={{ mt: 2 }}
+            color="error"
+          >
+            <DeleteOutline />
+            Borrar
+          </Button>
+        </Grid2>
         {/* Image gallery */}
         <ImageGallery images={note.imageUrls} />
       </Grid2>
