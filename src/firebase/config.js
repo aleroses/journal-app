@@ -7,13 +7,27 @@ import { getFirestore } from "firebase/firestore/lite";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// const firebaseConfig = {
+//   apiKey: "AIzaSyClS8Dtp-O686mpBJW6-4EwgwASeKqFLMw",
+//   authDomain: "journalapp-72f2d.firebaseapp.com",
+//   projectId: "journalapp-72f2d",
+//   storageBucket: "journalapp-72f2d.firebasestorage.app",
+//   messagingSenderId: "339972861287",
+//   appId: "1:339972861287:web:4ac56da1de5f56a6bc53c2",
+// };
+
+// Testing
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyClS8Dtp-O686mpBJW6-4EwgwASeKqFLMw",
-  authDomain: "journalapp-72f2d.firebaseapp.com",
-  projectId: "journalapp-72f2d",
-  storageBucket: "journalapp-72f2d.firebasestorage.app",
-  messagingSenderId: "339972861287",
-  appId: "1:339972861287:web:4ac56da1de5f56a6bc53c2",
+  apiKey: "AIzaSyCYxZgelzrA7JRP0rrRtMVMlslgJY9I8jA",
+  authDomain: "appcompras-518fb.firebaseapp.com",
+  databaseURL:
+    "https://appcompras-518fb-default-rtdb.firebaseio.com",
+  projectId: "appcompras-518fb",
+  storageBucket: "appcompras-518fb.firebasestorage.app",
+  messagingSenderId: "365427579609",
+  appId: "1:365427579609:web:49ef881499d7673fc67cc8",
 };
 
 // Initialize Firebase
