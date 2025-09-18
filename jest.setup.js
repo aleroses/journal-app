@@ -9,3 +9,8 @@ require("dotenv").config({
 jest.mock("./src/helpers/getEnvironments", () => ({
   getEnvironments: () => ({ ...process.env }),
 }));
+
+// Solution TextEncoder is not defined 👈👀👇
+import { TextDecoder, TextEncoder } from "util";
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
