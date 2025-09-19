@@ -11,12 +11,19 @@ import { LoginPage } from "../../../src/auth/pages/LoginPage";
 import { authSlice } from "../../../src/store/auth/authSlice";
 import { notAuthenticatedState } from "../../fixtures/authFixtures";
 
+// It is important to put the word "mock" first.
+const mockStartGoogleSignIn = jest.fn();
+
+jest.mock("../../../src/store/auth/thunks", () => ({
+  startGoogleSignIn: () => mockStartGoogleSignIn,
+}));
+
 const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
-    preloadedState: {
-      auth: notAuthenticatedState,
-    },
+  },
+  preloadedState: {
+    auth: notAuthenticatedState,
   },
 });
 
@@ -45,11 +52,16 @@ describe("Testing on LoginPage", () => {
     );
 
     // screen.debug()
+    // console.log(store.getState());
 
     const googleBtn = screen.getByLabelText("google-btn");
-
     fireEvent.click(googleBtn);
 
     // screen.debug();
+
+    // console.log(store.getState());
+
+    expect(mockStartGoogleSignIn).toHaveBeenCalled();
+    // expect(mockStartGoogleSignIn).toHaveBeenCalledWith();
   });
 });
