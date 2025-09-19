@@ -44,7 +44,6 @@ export const LoginPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // console.log({ email, password });
     //! This isn't the action to be dispatched
     // dispatch(checkingAuthentication());
     dispatch(
@@ -128,6 +127,7 @@ export const LoginPage = () => {
                 disabled={isAuthenticating}
                 variant="contained"
                 fullWidth
+                aria-label="google-btn" /* ------- */
                 startIcon={<Google />}
                 onClick={handleGoogleSignIn}
               >
