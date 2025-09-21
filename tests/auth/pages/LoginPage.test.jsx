@@ -3,19 +3,30 @@ import {
   render,
   screen,
 } from "@testing-library/react";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { MemoryRouter } from "react-router-dom";
 
 import { LoginPage } from "../../../src/auth/pages/LoginPage";
 import { authSlice } from "../../../src/store/auth/authSlice";
 import { notAuthenticatedState } from "../../fixtures/authFixtures";
+import { startLoginWithEmailPassword } from "../../../src/store/auth/thunks";
 
 // It is important to put the word "mock" first.
 const mockStartGoogleSignIn = jest.fn();
+const mockStartLoginWithEmailPassword = jest.fn();
 
 jest.mock("../../../src/store/auth/thunks", () => ({
   startGoogleSignIn: () => mockStartGoogleSignIn,
+  startLoginWithEmailPassword: ({ email, password }) => {
+    return () =>
+      mockStartLoginWithEmailPassword({ email, password });
+  },
+}));
+
+jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
+  useDispatch: () => (fn) => fn(),
 }));
 
 const store = configureStore({
@@ -28,6 +39,8 @@ const store = configureStore({
 });
 
 describe("Testing on LoginPage", () => {
+  beforeEach(() => jest.clearAllMocks());
+
   test("It should display the component correctly", () => {
     render(
       <Provider store={store}>
@@ -89,16 +102,16 @@ describe("Testing on LoginPage", () => {
       target: { name: "email", value: email },
     });
 
-    /* It didn't work for me. 
+    // It didn't work for me.
     const passwordField = screen.getByTestId("password");
     fireEvent.change(passwordField, {
       target: { name: "password", value: password },
     });
 
     const loginForm = screen.getByLabelText("submit-form");
-    fireEvent.submit(loginForm); */
+    fireEvent.submit(loginForm);
 
-    const passwordWrapper = screen.getByTestId("password");
+    /* const passwordWrapper = screen.getByTestId("password");
     const passwordInput =
       passwordWrapper.querySelector("input");
     fireEvent.change(passwordInput, {
@@ -108,6 +121,13 @@ describe("Testing on LoginPage", () => {
     const passwordField = screen.getByLabelText("Password");
     fireEvent.change(passwordField, {
       target: { name: "password", value: password },
+    }); */
+
+    expect(
+      mockStartLoginWithEmailPassword
+    ).toHaveBeenCalledWith({
+      email: email,
+      password: password,
     });
   });
 });
