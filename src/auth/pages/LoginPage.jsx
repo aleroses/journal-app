@@ -46,6 +46,9 @@ export const LoginPage = () => {
 
     //! This isn't the action to be dispatched
     // dispatch(checkingAuthentication());
+
+    console.log({ email, password });
+
     dispatch(
       startLoginWithEmailPassword({ email, password })
     );
@@ -64,6 +67,7 @@ export const LoginPage = () => {
   return (
     <AuthLayout title="Login">
       <form
+        aria-label="submit-form"
         action=""
         onSubmit={handleSubmit}
         className="animate__animated animate__fadeIn animate__faster"
@@ -93,7 +97,10 @@ export const LoginPage = () => {
               type="password"
               placeholder="password"
               size="small"
-              fullWidth
+              fullWidth /* --------- */
+              slotProps={{
+                input: { "data-testid": "password" },
+              }}
               name="password"
               value={password}
               onChange={handleInputChange}
